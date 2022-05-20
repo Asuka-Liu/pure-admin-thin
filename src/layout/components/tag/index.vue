@@ -195,42 +195,42 @@ const handleScroll = (offset: number): void => {
 const tagsViews = reactive<Array<tagsViewsType>>([
   {
     icon: refresh,
-    text: $t("buttons.hsreload"),
+    text: $t("buttons.reload"),
     divided: false,
     disabled: false,
     show: true
   },
   {
     icon: close,
-    text: $t("buttons.hscloseCurrentTab"),
+    text: $t("buttons.closeCurrentTab"),
     divided: false,
     disabled: multiTags.value.length > 1 ? false : true,
     show: true
   },
   {
     icon: closeLeft,
-    text: $t("buttons.hscloseLeftTabs"),
+    text: $t("buttons.closeLeftTabs"),
     divided: true,
     disabled: multiTags.value.length > 1 ? false : true,
     show: true
   },
   {
     icon: closeRight,
-    text: $t("buttons.hscloseRightTabs"),
+    text: $t("buttons.closeRightTabs"),
     divided: false,
     disabled: multiTags.value.length > 1 ? false : true,
     show: true
   },
   {
     icon: closeOther,
-    text: $t("buttons.hscloseOtherTabs"),
+    text: $t("buttons.closeOtherTabs"),
     divided: true,
     disabled: multiTags.value.length > 2 ? false : true,
     show: true
   },
   {
     icon: closeAll,
-    text: $t("buttons.hscloseAllTabs"),
+    text: $t("buttons.closeAllTabs"),
     divided: false,
     disabled: multiTags.value.length > 1 ? false : true,
     show: true
@@ -318,7 +318,7 @@ function deleteDynamicTag(obj: any, current: any, tag?: string) {
           path: "/welcome",
           parentPath: "/",
           meta: {
-            title: "menus.hshome",
+            title: "menus.home",
             icon: "home-filled"
           }
         },
@@ -712,7 +712,7 @@ const getContextMenuStyle = computed((): CSSProperties => {
     <ul class="right-button">
       <li>
         <span
-          :title="t('buttons.hsrefreshRoute')"
+          :title="t('buttons.refreshRoute')"
           class="el-icon-refresh-right rotate"
           @click="onFresh"
         >

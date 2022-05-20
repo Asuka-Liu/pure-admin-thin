@@ -103,7 +103,7 @@ function translationEn() {
               <IconifyIconOffline
                 icon="logout-circle-r-line"
                 style="margin: 5px"
-              />{{ t("buttons.hsLoginOut") }}</el-dropdown-item
+              />{{ t("buttons.loginOut") }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>

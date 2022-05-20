@@ -10,7 +10,7 @@ const { isFullscreen, toggle } = useFullscreen();
   <div class="screen-full" @click="toggle">
     <FontIcon
       :title="
-        isFullscreen ? t('buttons.hsexitfullscreen') : t('buttons.hsfullscreen')
+        isFullscreen ? t('buttons.exitFullscreen') : t('buttons.fullScreen')
       "
       :icon="isFullscreen ? 'team-iconexit-fullscreen' : 'team-iconfullscreen'"
     />

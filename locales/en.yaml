@@ -1,32 +1,32 @@
 buttons:
-  hsLoginOut: LoginOut
-  hsfullscreen: FullScreen
-  hsexitfullscreen: ExitFullscreen
-  hsrefreshRoute: RefreshRoute
-  hslogin: Login
-  hsadd: Add
-  hsmark: Mark/Cancel
-  hssave: Save
-  hssearch: Search
-  hsexpendAll: Expand All
-  hscollapseAll: Collapse All
-  hssystemSet: Open ProjectConfig
-  hsdelete: Delete
-  hsreload: Reload
-  hscloseCurrentTab: Close CurrentTab
-  hscloseLeftTabs: Close LeftTabs
-  hscloseRightTabs: Close RightTabs
-  hscloseOtherTabs: Close OtherTabs
-  hscloseAllTabs: Close AllTabs
+  loginOut: LoginOut
+  fullScreen: FullScreen
+  exitFullscreen: ExitFullscreen
+  refreshRoute: RefreshRoute
+  login: Login
+  add: Add
+  mark: Mark/Cancel
+  save: Save
+  search: Search
+  expendAll: Expand All
+  collapseAll: Collapse All
+  systemSet: Open ProjectConfig
+  delete: Delete
+  reload: Reload
+  closeCurrentTab: Close CurrentTab
+  closeLeftTabs: Close LeftTabs
+  closeRightTabs: Close RightTabs
+  closeOtherTabs: Close OtherTabs
+  closeAllTabs: Close AllTabs
 menus:
-  hshome: Home
-  hslogin: Login
-  hserror: Error Page
-  hsfourZeroFour: "404"
-  hsfourZeroOne: "403"
-  hsFive: "500"
+  home: Home
+  login: Login
+  error: Error Page
+  fourZeroFour: "404"
+  fourZeroOne: "403"
+  FiveHundred: "500"
   permission: Permission Manage
-  permissionPage: Page Permission
+  permissionUser: User Permission
   permissionButton: Button Permission
 status:
   hsLoad: Loading...

@@ -156,7 +156,7 @@ function onReset() {
       path: "/welcome",
       parentPath: "/",
       meta: {
-        title: "menus.hshome",
+        title: "menus.home",
         icon: "home-filled"
       }
     }

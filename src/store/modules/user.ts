@@ -38,9 +38,6 @@ export const useUserStore = defineStore({
     SET_VERIFYCODE(verifyCode) {
       this.verifyCode = verifyCode;
     },
-    SET_CURRENTPAGE(value) {
-      this.currentPage = value;
-    },
     // 登入
     async loginByUsername(data) {
       return new Promise<void>((resolve, reject) => {

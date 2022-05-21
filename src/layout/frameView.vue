@@ -2,7 +2,7 @@
   <div
     class="frame"
     v-loading="loading"
-    :element-loading-text="t('status.hsLoad')"
+    :element-loading-text="t('status.Load')"
   >
     <iframe :src="frameSrc" class="frame-iframe" ref="frameRef" />
   </div>

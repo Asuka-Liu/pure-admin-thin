@@ -1,13 +1,40 @@
 // 根据角色动态生成路由
 import { MockMethod } from "vite-plugin-mock";
 
+const userAdminRouter = {
+  path: "/userAdmin",
+  redirect: "/userAdmin/userList",
+  meta: {
+    icon: "lollipop",
+    title: "menus.userAdmin",
+    rank: 1
+  },
+  children: [
+    {
+      path: "/userAdmin/userList",
+      name: "userList",
+      meta: {
+        icon: "user-outlined",
+        title: "menus.userList"
+      }
+    },
+    {
+      path: "/userAdmin/userAdd",
+      name: "userAdd",
+      meta: {
+        icon: "user-add-outlined",
+        title: "menus.userAdd"
+      }
+    }
+  ]
+};
 const permissionRouter = {
   path: "/permission",
   redirect: "/ permission/user/index",
   meta: {
     title: "menus.permission",
     icon: "lollipop",
-    rank: 7
+    rank: 1
   },
   children: [
     {
@@ -42,7 +69,7 @@ export default [
       if (query.name === "admin") {
         return {
           code: 0,
-          info: [setDifAuthority("v-admin", permissionRouter)]
+          info: [userAdminRouter, setDifAuthority("v-admin", permissionRouter)]
         };
       } else {
         return {

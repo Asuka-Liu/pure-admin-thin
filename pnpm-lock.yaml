@@ -4,9 +4,10 @@ specifiers:
   '@commitlint/cli': 13.1.0
   '@commitlint/config-conventional': 13.1.0
   '@ctrl/tinycolor': ^3.4.1
+  '@iconify-icons/ant-design': ^1.2.2
   '@iconify-icons/ep': ^1.2.4
   '@iconify-icons/ri': ^1.2.1
-  '@iconify/vue': ^3.2.0
+  '@iconify/vue': ^3.2.1
   '@intlify/vite-plugin-vue-i18n': ^3.4.0
   '@pureadmin/components': ^1.0.6
   '@pureadmin/theme': ^1.1.0
@@ -87,6 +88,7 @@ specifiers:
 
 dependencies:
   '@ctrl/tinycolor': 3.4.1
+  '@iconify-icons/ant-design': 1.2.2
   '@pureadmin/components': 1.0.6_vue@3.2.33
   '@vueuse/core': 8.4.2_vue@3.2.33
   '@vueuse/motion': 2.0.0-beta.12_vue@3.2.33
@@ -715,6 +717,12 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
+  /@iconify-icons/ant-design/1.2.2:
+    resolution: {integrity: sha512-wbstGaLVwMqX5tK1lzDz5VgpuGMP+HT8pw0MBsImbIIl1+elR/6zTSyPJsZoxet7AoCEbEmnOKPDABnoXi7oQg==}
+    dependencies:
+      '@iconify/types': 1.1.0
+    dev: false
+
   /@iconify-icons/ep/1.2.4:
     resolution: {integrity: sha512-EmNFcajYB1ZfvviG6296NtfMlg0Q+w619qx/0H+tUaVxHIlChPlmOYMKRiOPKeNTvoFgEN+u5jbYxMWBqSWYDg==}
     dependencies:
@@ -729,7 +737,6 @@ packages:
 
   /@iconify/types/1.1.0:
     resolution: {integrity: sha512-Jh0llaK2LRXQoYsorIH8maClebsnzTcve+7U3rQUSnC11X4jtPnFuyatqFLvMxZ8MLG8dB4zfHsbPfuvxluONw==}
-    dev: true
 
   /@iconify/utils/1.0.32:
     resolution: {integrity: sha512-m+rnw7qKHq/XF7DAi4BcFoEAcXBfqqMgQJh8brGEHeqE/RUvgDMjmxsHgWnVpFsG+VmjGyAiI7nwXdliCwEU0Q==}

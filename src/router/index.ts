@@ -29,11 +29,24 @@ import {
 } from "./utils";
 
 import homeRouter from "./modules/home";
-import errorRouter from "./modules/error";
+// import errorRouter from "./modules/error";
 import remainingRouter from "./modules/remaining";
+// import userAdminRouter from "/@/router/modules/userAdmin";
+import noticeRouter from "./modules/notice";
+import tagRouter from "./modules/softTag";
+import softwareRouter from "./modules/software";
+import aboutRouter from "./modules/about";
 
 // 原始静态路由（未做任何处理）
-const routes = [homeRouter, errorRouter];
+const routes = [
+  homeRouter,
+  // userAdminRouter,
+  // errorRouter,
+  noticeRouter,
+  tagRouter,
+  softwareRouter,
+  aboutRouter
+];
 
 // 导出处理后的静态路由（三级及以上的路由全部拍成二级）
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(

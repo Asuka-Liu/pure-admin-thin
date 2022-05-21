@@ -21,6 +21,12 @@ buttons:
 menus:
   home: 首页
   login: 登陆
+  notice: 通知公告
+  tag: 分类
+  software: 软件
+  softwareList: 软件列表
+  softwareUpload: 软件上传
+  about: 关于
   error: 错误页面
   fourZeroFour: "404"
   fourZeroOne: "403"
@@ -28,5 +34,8 @@ menus:
   permission: 权限管理
   permissionUser: 用户管理
   permissionButton: 按钮权限
+  userAdmin: 用户管理
+  userList: 用户列表
+  userAdd: 添加用户
 status:
-  hsLoad: 加载中...
+  Load: 加载中...

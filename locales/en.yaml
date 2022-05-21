@@ -21,6 +21,12 @@ buttons:
 menus:
   home: Home
   login: Login
+  notice: Notice
+  tag: Tag
+  software: Software
+  softwareList: SoftwareList
+  softwareUpload: SoftwareUpload
+  about: About
   error: Error Page
   fourZeroFour: "404"
   fourZeroOne: "403"
@@ -29,4 +35,4 @@ menus:
   permissionUser: User Permission
   permissionButton: Button Permission
 status:
-  hsLoad: Loading...
+  Load: Loading...

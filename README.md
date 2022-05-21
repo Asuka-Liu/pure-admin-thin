@@ -1,4 +1,4 @@
-### ZzuSoft Admin
+### Soft Admin
 
 - 0 首页
 

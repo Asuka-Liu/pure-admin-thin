@@ -22,7 +22,7 @@ const defaultConfig: AxiosRequestConfig = {
   //     ? VITE_PROXY_DOMAIN_REAL
   //     : VITE_PROXY_DOMAIN,
   // 当前使用mock模拟请求，将baseURL制空，如果你的环境用到了http请求，请删除下面的baseURL启用上面的baseURL，并将11行、16行代码注释取消
-  baseURL: "",
+  baseURL: "https://mock.mirrors.surl.cf/mock/6289b7982f608f7db04ec344/sa",
   timeout: 10000,
   headers: {
     Accept: "application/json, text/plain, */*",

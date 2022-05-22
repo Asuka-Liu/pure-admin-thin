@@ -1,16 +1,17 @@
 <script lang="ts">
 export default {
-  name: "ListCard"
+  name: "SoftList"
 };
 </script>
 
 <script setup lang="ts">
-import { getCardList } from "/@/api/list";
+import { getAllSoftGroup } from "/@/api/list";
 import Card from "./components/Card.vue";
 import { ref, onMounted, nextTick } from "vue";
 import dialogForm from "./components/DialogForm.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import router from "/@/router";
 
 const svg = `
         <path class="path" d="
@@ -23,26 +24,44 @@ const svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `;
 
+interface SoftFileType {
+  softId: number;
+  softName: string;
+  groupId: number;
+  downloadSrc: string;
+  downloadNum: number;
+  uploadTime: string;
+}
+
+interface SoftGroupType {
+  groupId: number;
+  groupName: string;
+  iconSrc: string;
+  mdSrc: string;
+  softInfoList: SoftFileType[];
+}
+
 const INITIAL_DATA = {
-  name: "",
+  groupName: "",
   status: "",
-  description: "",
+  iconSrc: "",
+  mdSrc: "",
   type: "",
-  mark: ""
+  softInfoList: []
 };
 
 const pagination = ref({ current: 1, pageSize: 12, total: 0 });
 
-const productList = ref([]);
+const softGroup = ref([]);
 const dataLoading = ref(true);
 
-const getCardListData = async () => {
+const getSoftListData = async () => {
   try {
-    const { data } = await getCardList();
-    productList.value = data.list;
+    const { data } = await getAllSoftGroup();
+    softGroup.value = data;
     pagination.value = {
       ...pagination.value,
-      total: data.list.length
+      total: data.length
     };
   } catch (e) {
     console.log(e);
@@ -54,11 +73,11 @@ const getCardListData = async () => {
 };
 
 onMounted(() => {
-  getCardListData();
+  getSoftListData();
 });
 
-const formDialogVisible = ref(false);
-const formData = ref({ ...INITIAL_DATA });
+const softDialogVisible = ref(false);
+const softData = ref({ ...INITIAL_DATA });
 const searchValue = ref("");
 
 const onPageSizeChange = (size: number) => {
@@ -68,10 +87,10 @@ const onPageSizeChange = (size: number) => {
 const onCurrentChange = (current: number) => {
   pagination.value.current = current;
 };
-const handleDeleteItem = product => {
+const handleDeleteItem = software => {
   ElMessageBox.confirm(
-    product
-      ? `确认删除后${product.name}的所有产品信息将被清空, 且无法恢复`
+    software
+      ? `确认删除后${software.groupName}的所有产品信息将被清空, 且无法恢复`
       : "",
     "提示",
     {
@@ -86,24 +105,27 @@ const handleDeleteItem = product => {
     })
     .catch(() => {});
 };
-const handleManageProduct = product => {
-  formDialogVisible.value = true;
+const handleManageProduct = software => {
+  softDialogVisible.value = true;
   nextTick(() => {
-    formData.value = { ...product, status: product?.isSetup ? "1" : "0" };
+    softData.value = { ...software, status: "1" };
   });
+};
+const softUpload = () => {
+  router.push("/software/uploadSoft");
 };
 </script>
 
 <template>
   <div class="main">
     <div class="w-full flex justify-between mb-4">
-      <el-button :icon="useRenderIcon('add')" @click="formDialogVisible = true">
-        新建产品
+      <el-button :icon="useRenderIcon('add')" @click="softUpload"
+        >上传软件
       </el-button>
       <el-input
         style="width: 300px"
         v-model="searchValue"
-        placeholder="请输入产品名称"
+        placeholder="请输入软件名称"
         clearable
       >
         <template #suffix>
@@ -124,26 +146,26 @@ const handleManageProduct = product => {
       <el-empty
         description="暂无数据"
         v-show="
-          productList
+          softGroup
             .slice(
               pagination.pageSize * (pagination.current - 1),
               pagination.pageSize * pagination.current
             )
             .filter(v =>
-              v.name.toLowerCase().includes(searchValue.toLowerCase())
+              v.groupName.toLowerCase().includes(searchValue.toLowerCase())
             ).length === 0
         "
       />
       <template v-if="pagination.total > 0">
         <el-row :gutter="16">
           <el-col
-            v-for="(product, index) in productList
+            v-for="(software, index) in softGroup
               .slice(
                 pagination.pageSize * (pagination.current - 1),
                 pagination.pageSize * pagination.current
               )
               .filter(v =>
-                v.name.toLowerCase().includes(searchValue.toLowerCase())
+                v.groupName.toLowerCase().includes(searchValue.toLowerCase())
               )"
             :key="index"
             :xs="24"
@@ -153,7 +175,7 @@ const handleManageProduct = product => {
             :xl="4"
           >
             <Card
-              :product="product"
+              :software="software"
               @delete-item="handleDeleteItem"
               @manage-product="handleManageProduct"
             />
@@ -172,6 +194,6 @@ const handleManageProduct = product => {
         />
       </template>
     </div>
-    <dialogForm v-model:visible="formDialogVisible" :data="formData" />
+    <dialogForm v-model:visible="softDialogVisible" :data="softData" />
   </div>
 </template>

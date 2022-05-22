@@ -6,7 +6,7 @@ interface postType extends Promise<any> {
   msg?: string;
 }
 
-// 卡片列表
-export const getCardList = (data?: object): postType => {
-  return http.request("post", "/getCardList", { data });
+// 获取软件列表
+export const getAllSoftGroup = (data?: object): postType => {
+  return http.request("get", "/getAllSoftGroup", { data });
 };

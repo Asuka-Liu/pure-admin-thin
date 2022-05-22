@@ -30,6 +30,7 @@ import ArrowDown from "@iconify-icons/ep/arrow-down";
 import CloseBold from "@iconify-icons/ep/close-bold";
 import Bell from "@iconify-icons/ep/bell";
 import Search from "@iconify-icons/ep/search";
+import plusIcon from '@iconify-icons/ep/plus';
 addIcon("check", Check);
 addIcon("home-filled", HomeFilled);
 addIcon("setting", Setting);
@@ -39,7 +40,7 @@ addIcon("arrow-down", ArrowDown);
 addIcon("close-bold", CloseBold);
 addIcon("bell", Bell);
 addIcon("search", Search);
-
+addIcon("plus", plusIcon);
 // remixicon
 import ArrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";
 import ArrowLeftSLine from "@iconify-icons/ri/arrow-left-s-line";

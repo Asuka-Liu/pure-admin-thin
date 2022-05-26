@@ -4,7 +4,7 @@ const Layout = () => import("/@/layout/index.vue");
 const userAdminRouter = {
   path: "/userAdmin",
   component: Layout,
-  redirect: "/userAdmin/userList",
+  redirect: "/userAdmin",
   meta: {
     icon: "lollipop",
     title: $t("menus.userAdmin"),
@@ -13,7 +13,7 @@ const userAdminRouter = {
   },
   children: [
     {
-      path: "/userAdmin/userList",
+      path: "/userAdmin",
       name: "userList",
       component: () => import("/@/views/userAdmin/userList.vue"),
       meta: {

@@ -7,9 +7,9 @@ export default {
 <script setup lang="ts">
 import { computed, PropType } from "vue";
 
-
 export interface CardSoftType {
   // isSetup: boolean;
+  groupId: number;
   groupName: string;
   iconSrc: string;
   mdSrc: string;

@@ -1,8 +1,21 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { ElMessage, FormInstance } from "element-plus";
+import {
+  uploadIconFile,
+  uploadMdFile,
+  uploadSoftFile
+} from "/@/api/uploadFile";
+import { ElMessage, FormInstance, UploadUserFile } from "element-plus";
 import { genFileId } from "element-plus";
 import type { UploadInstance, UploadProps, UploadRawFile } from "element-plus";
+
+interface SoftType {
+  // isSetup: boolean;
+  groupId: number;
+  groupName: string;
+  iconSrc: string;
+  mdSrc: string;
+}
 
 const SELECT_OPTIONS = [
   { label: "分类1", value: 1 },
@@ -18,7 +31,7 @@ const props = defineProps({
     default: false
   },
   data: {
-    type: Object,
+    type: Object as () => SoftType,
     default: () => {
       return {};
     }
@@ -30,15 +43,49 @@ const ruleFormRef = ref<FormInstance>();
 const softVisible = ref(false);
 const softData = ref(props.data);
 
-const upload = ref<UploadInstance>();
+const uploadIcon = ref<UploadInstance>();
 
-const handleExceed: UploadProps["onExceed"] = files => {
-  upload.value!.clearFiles();
+const uploadMd = ref<UploadInstance>();
+const mdList = ref<UploadUserFile[]>([{ name: "", url: "" }]);
+
+//限制图标上传数量
+const iconExceed: UploadProps["onExceed"] = files => {
+  uploadIcon.value!.clearFiles();
   const file = files[0] as UploadRawFile;
   file.uid = genFileId();
-  upload.value!.handleStart(file);
+  uploadIcon.value!.handleStart(file);
 };
-
+//限制图标上传格式及大小
+const IconUpload = file => {
+  let FileExt = file.name.replace(/.+\./, "");
+  if (["png", "jpg", "jpeg"].indexOf(FileExt.toLowerCase()) === -1) {
+    ElMessage.error("必须上传图片格式为jpg/png !");
+    return false;
+  } else if (file.isLt1M === "0") {
+    ElMessage.error("图片大小不能超过1M!");
+    return false;
+  }
+  uploadIconFile([props.data.groupId, file]).then(res => {
+    if (res.code === 200) {
+      ElMessage.success("上传成功!");
+    }
+  });
+  return true;
+};
+//限制Markdown文件上传数量
+const beforeMdUpload: UploadProps["beforeUpload"] = rawFile => {
+  if (rawFile.type !== "md") {
+    ElMessage.error("必须上传Markdown文件!");
+    return false;
+  }
+  return true;
+};
+const mdExceed: UploadProps["onExceed"] = files => {
+  uploadMd.value!.clearFiles();
+  const file = files[0] as UploadRawFile;
+  file.uid = genFileId();
+  uploadMd.value!.handleStart(file);
+};
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -80,6 +127,8 @@ watch(
   () => props.data,
   val => {
     softData.value = val;
+    mdList.value[0].name = val.groupName + ".md";
+    mdList.value[0].url = val.mdSrc;
   }
 );
 
@@ -118,22 +167,35 @@ const rules = {
       </el-form-item>
       <el-form-item label="软件图标" prop="iconSrc">
         <el-upload
-          ref="upload"
-          class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          ref="uploadIcon"
+          :name="props.data.groupName"
+          class="upload-icon"
           :limit="1"
-          :on-exceed="handleExceed"
+          :on-exceed="iconExceed"
+          list-type="picture"
+          :on-change="IconUpload"
+          accept=".jpg,.png,.jpeg"
           :auto-upload="false"
+        >
+          <el-button type="primary">选择图标</el-button>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="软件描述">
+        <el-upload
+          ref="uploadMd"
+          class="upload-md"
+          :name="props.data.groupName"
+          :limit="1"
+          list-type="text"
+          :file-list="mdList"
+          :on-exceed="mdExceed"
+          :on-change="beforeMdUpload"
+          accept=".md"
+          :auto-upload="false"
+          :style="{ width: '480px' }"
         >
           <el-button type="primary">选择文件</el-button>
         </el-upload>
-      </el-form-item>
-      <el-form-item label="软件描述" prop="mdSrc">
-        <el-input
-          v-model="softData.mdSrc"
-          :style="{ width: '480px' }"
-          placeholder="请输入软件描述"
-        />
       </el-form-item>
       <el-form-item label="软件分类" prop="type">
         <el-select

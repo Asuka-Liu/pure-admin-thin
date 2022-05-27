@@ -7,23 +7,20 @@ export default {
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
-import { router } from "/@/router";
-import { getUserList } from "/@/api/system";
+import dialogForm from "./components/DialogForm.vue";
+import { getUserList, deleteUser } from "/@/api/system";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 interface UserListType {
   id: number;
   username: string;
   nickname: string;
-  email: string;
-  mobile: string;
-  role: string;
-  createTime: string;
-  updateTime: string;
-  status: number;
+  isAdmin: boolean;
 }
 
 const searchValue = ref("");
 const dataLoading = ref(true);
+const userDialogVisible = ref(false);
 
 const userList = ref<UserListType[]>([]);
 
@@ -39,10 +36,37 @@ const getUserListData = async () => {
     }, 500);
   }
 };
-
 onMounted(() => {
   getUserListData();
 });
+
+function adminChange({ $index, row }) {
+  ElMessageBox.confirm(
+    `确认要<strong>${
+      row.role === true ? " 停用 " : " 启用 "
+    }</strong><strong style='color:var(--el-color-primary)'>${
+      row.username
+    }</strong> 角色的<strong> 管理员 </strong>权限吗?`,
+    "系统提示",
+    {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+      dangerouslyUseHTMLString: true,
+      draggable: true
+    }
+  )
+    .then(() => {
+      // Todo  post接口修改管理员权限
+      setTimeout(() => {
+        ElMessage.success("已成功修改");
+      }, 300);
+    })
+    .catch(() => {
+      row.isAdmin === true ? (row.isAdmin = false) : (row.isAdmin = true);
+      ElMessage.warning("已取消修改");
+    });
+}
 
 const filterUserData = computed(() =>
   userList.value.filter(
@@ -51,11 +75,14 @@ const filterUserData = computed(() =>
       data.username.toLowerCase().includes(searchValue.value.toLowerCase())
   )
 );
+const handleDelete = (id: number) => {
+  const i = userList.value.findIndex(item => item.id === id);
+  userList.value.splice(i, 1);
+  deleteUser([{ id: i }]); //删除用户
+};
 
 const userAdd = () => {
-  router.push({
-    name: "userAdd"
-  });
+  userDialogVisible.value = true;
 };
 </script>
 
@@ -91,31 +118,32 @@ const userAdd = () => {
         table-layout="auto"
         style="width: 100%"
       >
-        <el-table-column prop="id" label="序号" />
+        <el-table-column type="index" label="序号" width="180" />
         <el-table-column prop="username" label="用户名" />
         <el-table-column prop="nickname" label="昵称" />
-        <el-table-column prop="email" label="邮箱" />
-        <el-table-column prop="mobile" label="手机号" />
-        <el-table-column prop="role" label="角色" />
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="更新时间" />
-        <el-table-column prop="status" label="状态" />
+
+        <el-table-column label="管理员" align="center" prop="role">
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.isAdmin"
+              @change="adminChange(scope)"
+            />
+          </template>
+        </el-table-column>
+
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
-            >
             <el-button
               size="small"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="handleDelete(scope.row.id)"
               >删除</el-button
             >
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <!--    <dialogForm v-model:visible="softDialogVisible" :data="softData" />-->
+    <dialogForm v-show="userDialogVisible" />
   </div>
 </template>
 

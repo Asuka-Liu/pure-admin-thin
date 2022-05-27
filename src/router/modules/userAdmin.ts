@@ -4,7 +4,7 @@ const Layout = () => import("/@/layout/index.vue");
 const userAdminRouter = {
   path: "/userAdmin",
   component: Layout,
-  redirect: "/userAdmin",
+  redirect: "/userAdmin/index",
   meta: {
     icon: "lollipop",
     title: $t("menus.userAdmin"),
@@ -13,23 +13,11 @@ const userAdminRouter = {
   },
   children: [
     {
-      path: "/userAdmin",
+      path: "/userAdmin/index",
       name: "userList",
-      component: () => import("/@/views/userAdmin/userList.vue"),
+      component: () => import("/@/views/userAdmin/index.vue"),
       meta: {
-        icon: "user-outlined",
-        title: $t("menus.userList"),
-        authority: ["admin"]
-      }
-    },
-    {
-      path: "/userAdmin/userAdd",
-      name: "userAdd",
-      component: () => import("/@/views/userAdmin/userAdd.vue"),
-      meta: {
-        icon: "user-add-outlined",
-        title: $t("menus.userAdd"),
-        authority: ["admin"]
+        title: $t("menus.userAdmin")
       }
     }
   ]

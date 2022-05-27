@@ -52,6 +52,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
 
 watch(imgCode, value => {
   useUserStoreHook().SET_VERIFYCODE(value);
+  console.log(value);
 });
 </script>
 

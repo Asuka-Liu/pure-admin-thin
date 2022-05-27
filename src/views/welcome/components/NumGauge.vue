@@ -65,7 +65,7 @@ function initEchartInstance() {
           fontSize: 40,
           offsetCenter: [0, "100%"]
         },
-        data: [{ value: 3000, name: "人数" }]
+        data: [{ value: 3000, name: "数量" }]
       }
     ]
   });

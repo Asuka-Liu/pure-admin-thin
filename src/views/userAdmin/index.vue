@@ -7,23 +7,22 @@ export default {
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
-import dialogForm from "./components/DialogForm.vue";
-import { getUserList, deleteUser } from "/@/api/system";
+import { getUserList, deleteUser, addUser } from "/@/api/system";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 interface UserListType {
-  id: number;
-  username: string;
-  nickname: string;
-  isAdmin: boolean;
+  id: number; // 用户id
+  username: string; //学号
+  nickname: string; //昵称
+  isAdmin: boolean; //是否是管理员
 }
 
 const searchValue = ref("");
 const dataLoading = ref(true);
-const userDialogVisible = ref(false);
 
 const userList = ref<UserListType[]>([]);
 
+//获取用户列表
 const getUserListData = async () => {
   try {
     const { data } = await getUserList();
@@ -40,6 +39,7 @@ onMounted(() => {
   getUserListData();
 });
 
+//改变管理员权限
 function adminChange({ $index, row }) {
   ElMessageBox.confirm(
     `确认要<strong>${
@@ -68,6 +68,7 @@ function adminChange({ $index, row }) {
     });
 }
 
+//搜索
 const filterUserData = computed(() =>
   userList.value.filter(
     data =>
@@ -75,14 +76,40 @@ const filterUserData = computed(() =>
       data.username.toLowerCase().includes(searchValue.value.toLowerCase())
   )
 );
+//删除用户
 const handleDelete = (id: number) => {
   const i = userList.value.findIndex(item => item.id === id);
   userList.value.splice(i, 1);
   deleteUser([{ id: i }]); //删除用户
 };
 
+//添加用户
 const userAdd = () => {
-  userDialogVisible.value = true;
+  ElMessageBox.prompt("请输入学号", "添加用户", {
+    confirmButtonText: "添加",
+    cancelButtonText: "Cancel",
+    inputPattern: /^\d{4,25}$/, //4-25位数字
+    inputErrorMessage: "请输入正确的学号"
+  })
+    .then(({ value }) => {
+      addUser([{ username: value }]);
+      userList.value.push({
+        id: userList.value.length + 1,
+        username: value,
+        nickname: value,
+        isAdmin: false
+      });
+      ElMessage({
+        type: "success",
+        message: `已添加学号:${value}`
+      });
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "已取消添加"
+      });
+    });
 };
 </script>
 
@@ -95,7 +122,7 @@ const userAdd = () => {
       <el-input
         style="width: 300px"
         v-model="searchValue"
-        placeholder="请输入用户名"
+        placeholder="请输入用学号"
         clearable
       >
         <template #suffix>
@@ -117,9 +144,11 @@ const userAdd = () => {
         stripe
         table-layout="auto"
         style="width: 100%"
+        :header-cell-style="{ 'text-align': 'center' }"
+        :cell-style="{ 'text-align': 'center' }"
       >
         <el-table-column type="index" label="序号" width="180" />
-        <el-table-column prop="username" label="用户名" />
+        <el-table-column prop="username" label="学号" />
         <el-table-column prop="nickname" label="昵称" />
 
         <el-table-column label="管理员" align="center" prop="role">
@@ -143,7 +172,6 @@ const userAdd = () => {
         </el-table-column>
       </el-table>
     </div>
-    <dialogForm v-show="userDialogVisible" />
   </div>
 </template>
 

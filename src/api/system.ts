@@ -11,6 +11,12 @@ export const getUserList = (data?: object): ResponseType => {
   return http.request("get", "/getUserList", { data });
 };
 
+//删除用户
 export const deleteUser = (data?: object): ResponseType => {
   return http.request("post", "/deleteUser", { data });
+};
+
+// 添加用户
+export const addUser = (data?: object): ResponseType => {
+  return http.request("post", "/addUser", { data });
 };

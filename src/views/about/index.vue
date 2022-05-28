@@ -13,6 +13,7 @@ interface peopleItem {
   name: string;
 }
 
+// eslint-disable-next-line no-undef
 const { pkg, lastBuildTime } = __APP_INFO__;
 const { dependencies, version } = pkg;
 

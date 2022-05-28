@@ -7,7 +7,12 @@ export default {
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
-import { getUserList, deleteUser, addUser } from "/@/api/system";
+import {
+  getUserList,
+  deleteUser,
+  addUser,
+  changeUserRole
+} from "/@/api/system";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 interface UserListType {
@@ -57,10 +62,26 @@ function adminChange({ $index, row }) {
     }
   )
     .then(() => {
-      // Todo  post接口修改管理员权限
-      setTimeout(() => {
-        ElMessage.success("已成功修改");
-      }, 300);
+      // Todo  post接口修改管理员权限 finish
+      changeUserRole({ id: row.id, isAdmin: row.isAdmin })
+        .then(value => {
+          if (value.code === 200) {
+            ElMessage.success(
+              `${row.username} 管理员权限${row.isAdmin ? "启用" : "停用"}成功`
+            );
+          } else {
+            ElMessage.error(
+              `${row.username} 管理员权限${row.isAdmin ? "启用" : "停用"}失败`
+            );
+            userList.value[$index].isAdmin = !row.isAdmin;
+          }
+        })
+        .catch(() => {
+          ElMessage.error(
+            `${row.username} 管理员权限${row.isAdmin ? "启用" : "停用"}失败`
+          );
+          userList.value[$index].isAdmin = !row.isAdmin;
+        });
     })
     .catch(() => {
       row.isAdmin === true ? (row.isAdmin = false) : (row.isAdmin = true);
@@ -122,7 +143,7 @@ const userAdd = () => {
       <el-input
         style="width: 300px"
         v-model="searchValue"
-        placeholder="请输入用学号"
+        placeholder="请输入学号"
         clearable
       >
         <template #suffix>

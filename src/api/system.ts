@@ -20,3 +20,8 @@ export const deleteUser = (data?: object): ResponseType => {
 export const addUser = (data?: object): ResponseType => {
   return http.request("post", "/addUser", { data });
 };
+
+// 更改管理员权限
+export const changeUserRole = (data?: object): ResponseType => {
+  return http.request("post", "/changeUserRole", { data });
+};

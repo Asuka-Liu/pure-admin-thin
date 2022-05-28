@@ -1,6 +1,7 @@
 import reSizePie from "./SizePie.vue";
 import rePeopleGauge from "./PeopleGauge.vue";
 import reNumGauge from "./NumGauge.vue";
+import reSoftGauge from "./SoftGauge.vue";
 import { App } from "vue";
 
 const ReSizePie = Object.assign(reSizePie, {
@@ -18,5 +19,10 @@ const ReNumGauge = Object.assign(reNumGauge, {
     app.component(reNumGauge.name, reNumGauge);
   }
 });
+const ReSoftGauge = Object.assign(reSoftGauge, {
+  install(app: App) {
+    app.component(reSoftGauge.name, reSoftGauge);
+  }
+});
 
-export { ReSizePie, RePeopleGauge, ReNumGauge };
+export { ReSizePie, RePeopleGauge, ReNumGauge, ReSoftGauge };

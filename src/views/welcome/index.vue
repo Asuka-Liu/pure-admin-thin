@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { ReSizePie, RePeopleGauge, ReNumGauge } from "./components";
+import {
+  ReSizePie,
+  RePeopleGauge,
+  ReNumGauge,
+  ReSoftGauge
+} from "./components";
 import { ref, computed } from "vue";
 import avatars from "/@/assets/avatars.jpg";
 
@@ -30,6 +35,68 @@ let greetings = computed(() => {
       </div>
     </el-card>
     <el-row :gutter="24" style="margin: 20px">
+      <el-col
+        :xs="24"
+        :sm="24"
+        :md="12"
+        :lg="12"
+        :xl="12"
+        style="margin-bottom: 20px"
+        v-motion
+        :initial="{
+          opacity: 0,
+          y: 100
+        }"
+        :enter="{
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 400
+          }
+        }"
+      >
+        <el-card>
+          <template #header>
+            <span style="font-size: 16px; font-weight: 500"> 游览人数 </span>
+          </template>
+          <el-skeleton animated :rows="7" :loading="loading">
+            <template #default>
+              <RePeopleGauge />
+            </template>
+          </el-skeleton>
+        </el-card>
+      </el-col>
+      <el-col
+        :xs="24"
+        :sm="24"
+        :md="12"
+        :lg="12"
+        :xl="12"
+        style="margin-bottom: 20px"
+        v-motion
+        :initial="{
+          opacity: 0,
+          y: 100
+        }"
+        :enter="{
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 600
+          }
+        }"
+      >
+        <el-card>
+          <template #header>
+            <span style="font-size: 16px; font-weight: 500"> 软件下载量 </span>
+          </template>
+          <el-skeleton animated :rows="7" :loading="loading">
+            <template #default>
+              <ReNumGauge />
+            </template>
+          </el-skeleton>
+        </el-card>
+      </el-col>
       <el-col
         :xs="24"
         :sm="24"
@@ -79,17 +146,19 @@ let greetings = computed(() => {
           opacity: 1,
           y: 0,
           transition: {
-            delay: 400
+            delay: 200
           }
         }"
       >
         <el-card>
           <template #header>
-            <span style="font-size: 16px; font-weight: 500"> 游览人数 </span>
+            <span style="font-size: 16px; font-weight: 500">
+              MinIO存储信息
+            </span>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <RePeopleGauge />
+              <ReSoftGauge />
             </template>
           </el-skeleton>
         </el-card>
@@ -110,18 +179,16 @@ let greetings = computed(() => {
           opacity: 1,
           y: 0,
           transition: {
-            delay: 600
+            delay: 200
           }
         }"
       >
         <el-card>
           <template #header>
-            <span style="font-size: 16px; font-weight: 500"> 软件下载量 </span>
+            <span style="font-size: 16px; font-weight: 500"> 待开发 </span>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
-            <template #default>
-              <ReNumGauge />
-            </template>
+            <template #default> 待开发 </template>
           </el-skeleton>
         </el-card>
       </el-col>

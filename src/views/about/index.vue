@@ -24,6 +24,9 @@ const devPeopleList: peopleItem[] = [
   },
   {
     name: "EnergyMrZhao"
+  },
+  {
+    name: "DukeWF"
   }
 ];
 

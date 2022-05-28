@@ -5,13 +5,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-export interface schemaItem {
+interface schemaItem {
   field: string;
   label: string;
 }
-export interface peopleItem {
+interface peopleItem {
   name: string;
-  github: string;
 }
 
 const { pkg, lastBuildTime } = __APP_INFO__;
@@ -21,12 +20,10 @@ const schema: schemaItem[] = [];
 
 const devPeopleList: peopleItem[] = [
   {
-    name: "Asuka-liu",
-    github: ""
+    name: "Asuka-liu"
   },
   {
-    name: "EnergyZhao",
-    github: ""
+    name: "EnergyMrZhao"
   }
 ];
 
@@ -44,8 +41,9 @@ Object.keys(dependencies).forEach(key => {
         </div>
       </template>
       <span style="font-size: 15px">
-        Pure-Admin 是一个基于Vue3、Vite2、TypeScript、Element-Plus
-        的中后台解决方案，它可以帮助您快速搭建企业级中后台，提供现成的开箱解决方案及丰富的示例。原则上不收取任何费用及版权，可以放心使用，不过如需二次开源（比如用此平台二次开发并开源）请联系作者获取许可！
+        Pure-Admin
+        是一个基于Vue3、Vite2、TypeScript、Element-Plus、Vue-Route-Next
+        等技术栈的管理系统
       </span>
     </el-card>
 
@@ -75,9 +73,9 @@ Object.keys(dependencies).forEach(key => {
           </a>
         </el-descriptions-item>
         <el-descriptions-item label="QQ交流群" label-align="left" align="left">
-          <a href="https://jq.qq.com/?_wv=1027&k=HntMx0dt" target="_blank">
+          <a href="https://jq.qq.com/?_wv=1027&k=2gq8t3wl" target="_blank">
             <span style="color: var(--el-color-primary)">
-              点击链接加入群聊【Pure Admin】
+              点击链接加入群聊
             </span>
           </a>
         </el-descriptions-item>
@@ -97,7 +95,7 @@ Object.keys(dependencies).forEach(key => {
           v-for="(item, index) in devPeopleList"
           :key="index"
         >
-          <a :href="item.github" target="_blank">
+          <a :href="'https://github.com/' + item.name" target="_blank">
             <span style="color: var(--el-color-primary)">Github</span>
           </a>
         </el-descriptions-item>
